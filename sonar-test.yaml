@@ -3,6 +3,8 @@ trigger:
 
 pool:
   name: tzl-poc
+  demands:
+    - agent.name -equals tzl-poc-ado-f69787499-4wbsk
 
 steps:
 - task: SonarQubePrepare@4
