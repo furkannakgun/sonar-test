@@ -7,19 +7,27 @@ pool:
     - agent.name -equals tzl-poc-ado-f69787499-5cc9b
 
 steps:
+- checkout: self
 - task: SonarQubePrepare@4
   inputs:
-    SonarQube: 'sonar-furkan-deneme'  # Adım 1'de oluşturduğunuz Service Connection ismini kullanın
+    SonarQube: 'sonar-furkan-deneme'
     scannerMode: 'CLI'
     configMode: 'manual'
-#    cliProjectKey: 'your_project_key'
+    cliProjectKey: 'sonar-furkan-deneme'
     cliSources: '.'
+
+- task: SonarQubeAnalyze@5
+  inputs:
+    jdkversion: 'JAVA_HOME_11_X64'
+
+- task: SonarQubePublish@5
+  inputs:
+    pollingTimeoutSec: '300'
 
 - script: echo 'Kod taraması başlatılıyor...'
   displayName: 'Echo'
 
 - task: SonarQubeAnalyze@4
 
-- task: SonarQubePublish@4
-  inputs:
-    pollingTimeoutSec: '300'
+
+
