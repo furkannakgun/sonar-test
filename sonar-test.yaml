@@ -1,0 +1,25 @@
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: SonarSource.sonarcloud.14d9cde6-c1da-4d55-aa01-2965cd301255.SonarCloudPrepare@1
+  inputs:
+    SonarCloud: 'SonarQubeServiceConnectionName' # Adım 2'de oluşturduğunuz Service Connection ismini kullanın
+    organization: 'your-organization-name'  # Eğer SonarCloud kullanıyorsanız bu satırı ve organization değerini ekleyin.
+    scannerMode: 'CLI'
+    configMode: 'manual'
+    cliProjectKey: 'your_project_key'
+    cliSources: '.'
+
+- script: |
+    echo 'Burada kodunuzu build etme ve test etme adımlarını ekleyin.'
+  displayName: 'Build and Test'
+
+- task: SonarSource.sonarcloud.ce096e50-6155-4de8-8800-4221aaeed4a1.SonarCloudAnalyze@1
+
+- task: SonarSource.sonarcloud.38b27399-a642-40af-bb7d-9971f69712e8.SonarCloudPublish@1
+  inputs:
+    pollingTimeoutSec: '300'
